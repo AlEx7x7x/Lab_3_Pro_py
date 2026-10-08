@@ -1,31 +1,25 @@
 from collections import Counter
 from collections.abc import Iterable
-from .models import StudentRecord
+from models import ProductRecord
 
-def calculate_statistics(students: Iterable[StudentRecord]) -> dict:
+def calculate_statistics(products: Iterable[ProductRecord]) -> dict:
     count = 0
-    total = 0.0
-    minimum = None
-    maximum = None
-    groups = Counter()
+    total_value = 0.0
+    most_expensive = None
+    categories = Counter()
     
-    for student in students:
-        grade = student.grade
+    for product in products:
         count += 1
-        total += grade
-        groups[student.group] += 1
+        total_value += (product.price * product.quantity)
+        categories[product.category] += 1
         
-        if minimum is None or grade < minimum:
-            minimum = grade
-        if maximum is None or grade > maximum:
-            maximum = grade
+        if most_expensive is None or product.price > most_expensive.price:
+            most_expensive = product
             
-    average = total / count if count else 0.0
-    
     return {
         "count": count,
-        "average": average,
-        "minimum": minimum,
-        "maximum": maximum,
-        "groups": dict(groups),
+        "total_value": total_value,
+        "most_expensive_product": most_expensive.name if most_expensive else None,
+        "most_expensive_price": most_expensive.price if most_expensive else 0.0,
+        "categories": dict(categories),
     }

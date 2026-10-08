@@ -1,7 +1,8 @@
 from typing import NamedTuple
 
-class StudentRecord(NamedTuple):
-    student_id: int
+class ProductRecord(NamedTuple):
+    product_id: int
     name: str
-    group: str
-    grade: float
+    category: str
+    price: float
+    quantity: int
